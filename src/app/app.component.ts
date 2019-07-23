@@ -73,7 +73,12 @@ export class AppComponent {
 
             if(this.erro) this.erro = "";
 
-            this.formEndereco.patchValue(dados);
+            //this.formEndereco.patchValue(dados);
+             this.formEndereco.get('logradouro').setValue(dados.logradouro);
+            this.formEndereco.get('complemento').setValue(dados.complemento);
+            this.formEndereco.get('bairro').setValue(dados.bairro);
+            this.formEndereco.get('localidade').setValue(dados.localidade);
+            this.formEndereco.get('uf').setValue(dados.uf);
             this.endereco = true;
           },
           erro => {
