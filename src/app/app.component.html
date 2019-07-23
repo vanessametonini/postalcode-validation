@@ -1,4 +1,62 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<h1>Consulta de código postal</h1>
+<form [formGroup]="formEndereco" (ngSubmit)="consultar()">
+  <fieldset>
+    <legend>Consulta</legend>
+
+    <div>
+      <label for="cep">CEP: </label>
+      <input placeholder="12345678" id="cep" formControlName="cep" type="text" required minlength="8" maxlength="8">
+      <span *ngIf="formEndereco.get('cep').status === 'PENDING'" class="loader"></span>
+      <button>Consultar</button>
+    </div>
+
+    <p *ngIf="formEndereco.get('cep').hasError('required') && formEndereco.get('cep').touched" class="erro">
+      Preencha um CEP para consultar o endereço!
+      <button (click)="formEndereco.reset()" class="erro">x</button>
+    </p>
+
+    <p>
+      <span *ngIf="formEndereco.get('cep').hasError('minlength')" class="erro">
+        Preencha
+        {{formEndereco.get('cep').getError('minlength').requiredLength}}
+        números.
+      </span>
+      <span *ngIf="formEndereco.get('cep').hasError('pattern')" class="erro">
+        Apenas números!
+      </span>
+      <span *ngIf="formEndereco.get('cep').hasError('cepInvalido')" class="erro">
+          CEP {{formEndereco.get('cep').value}} inválido
+      </span>
+    </p>
+
+    <p *ngIf="erro">{{erro}}</p>
+  </fieldset>
+
+  <fieldset *ngIf="endereco">
+    <legend>Endereço</legend>
+    <div>
+        <label for="logradouro">Logradouro: </label>
+        <input id="logradouro" formControlName="logradouro" type="text">
+      </div>
+
+      <div>
+        <label for="complemento">Complemento: </label>
+        <input id="complemento" formControlName="complemento" type="text">
+      </div>
+
+      <div>
+        <label for="bairro">Bairro: </label>
+        <input id="bairro" formControlName="bairro" type="text">
+      </div>
+
+      <div>
+        <label for="localidade">Localidade: </label>
+        <input id="localidade" formControlName="localidade" type="text">
+      </div>
+
+      <div>
+        <label for="uf">UF: </label>
+        <input id="uf" formControlName="uf" type="text">
+      </div>
+  </fieldset>
+</form>
