@@ -5,15 +5,22 @@
 
     <div>
       <label for="cep">CEP: </label>
-      <input placeholder="12345678" id="cep" formControlName="cep" type="text" required minlength="8" maxlength="8">
+      <input 
+      (keyup)="handleConsultar($event)" 
+      (input)="endereco = false" 
+      formControlName="cep" 
+      placeholder="12345678" id="cep" 
+      type="search" required minlength="8" maxlength="8">
       <span *ngIf="formEndereco.get('cep').status === 'PENDING'" class="loader"></span>
-      <button>Consultar</button>
+      <button [ngClass]="{'valid':formEndereco.get('cep').status === 'VALID'}">
+        Consultar
+      </button>
     </div>
 
-    <p *ngIf="formEndereco.get('cep').hasError('required') && formEndereco.get('cep').touched" class="erro">
+    <!-- <p *ngIf="formEndereco.get('cep').hasError('required') && formEndereco.get('cep').touched" class="erro">
       Preencha um CEP para consultar o endereço!
       <button (click)="formEndereco.reset()" class="erro">x</button>
-    </p>
+    </p> -->
 
     <p>
       <span *ngIf="formEndereco.get('cep').hasError('minlength')" class="erro">

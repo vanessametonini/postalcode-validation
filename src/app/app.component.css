@@ -11,6 +11,13 @@ form {
   color: red;
 }
 
+.valid {
+  color: green;
+  background-color: greenyellow;
+  border: 1px solid green;
+  border-radius: 4px;
+}
+
 button.erro {
   background-color: antiquewhite;
   border-color: currentColor;

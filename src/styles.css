@@ -9,3 +9,15 @@ body {
   right: 0;
   top: 0;
 }
+
+footer {
+  max-width: 500px;
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align:center;
+}
+
+footer img {
+  vertical-align: bottom;
+  width: 20px;
+}

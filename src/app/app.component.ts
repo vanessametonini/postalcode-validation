@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { map, catchError } from "rxjs/operators";
+import { Endereco } from "./models/endereco";
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,11 @@ export class AppComponent {
   erro = "";
 
   constructor(private http: HttpClient) {}
+
+  handleConsultar(event: KeyboardEvent){
+    this.endereco = false;
+    if(event.key === "Enter") this.consultar();
+  }
 
   validaCEP(control: AbstractControl){
 
@@ -64,15 +70,6 @@ export class AppComponent {
         .subscribe(
           (dados: Endereco) => {
 
-            //console.log(dados);
-
-            if(dados.erro) {
-              this.erro = `CEP ${cep} não encontrado!`;
-              return
-            }
-
-            if(this.erro) this.erro = "";
-
             //this.formEndereco.patchValue(dados);
              this.formEndereco.get('logradouro').setValue(dados.logradouro);
             this.formEndereco.get('complemento').setValue(dados.complemento);
@@ -82,25 +79,12 @@ export class AppComponent {
             this.endereco = true;
           },
           erro => {
-            //console.error(erro)
+            if(!navigator.onLine)
+              this.erro = `Oops! Você está offline`;
+            console.error(erro)
             this.formEndereco.reset();
-            this.erro = "Erro no CEP, o mesmo deve conter apenas 8 números"
+            
           }
         )
   }
-}
-
-class Endereco {
-
-  cep = "";
-  logradouro = "";
-  complemento = "";
-  bairro = "";
-  localidade = "";
-  uf = "";
-  unidade = "";
-  ibge = "";
-  gia = "";
-  erro = "";
-
 }
